@@ -1,0 +1,81 @@
+{
+  "ai_video_services": {
+    "runway_ml": {
+      "enabled": true,
+      "api_url": "https://api.runwayml.com/v1/generate",
+      "api_key": "YOUR_RUNWAY_API_KEY",
+      "free_tier": true,
+      "daily_limit": 10,
+      "model": "gen-2",
+      "quality": "high"
+    },
+    "pika_labs": {
+      "enabled": true,
+      "api_url": "https://api.pika.art/generate",
+      "api_key": "YOUR_PIKA_API_KEY",
+      "free_tier": true,
+      "daily_limit": 5,
+      "model": "pika-1.0",
+      "quality": "medium"
+    },
+    "leonardo_ai": {
+      "enabled": true,
+      "api_url": "https://cloud.leonardo.ai/api/rest/v1/generations",
+      "api_key": "YOUR_LEONARDO_API_KEY",
+      "free_tier": true,
+      "daily_limit": 15,
+      "model": "leonardo-creative",
+      "quality": "high"
+    },
+    "stable_video": {
+      "enabled": false,
+      "api_url": "https://api.stability.ai/v2beta/image-to-video",
+      "api_key": "YOUR_STABILITY_API_KEY",
+      "free_tier": false,
+      "daily_limit": 0
+    }
+  },
+  "viral_themes": [
+    "mind_blowing_facts",
+    "what_if_scenarios",
+    "historical_secrets",
+    "science_experiments",
+    "life_hacks",
+    "motivational_stories",
+    "mystery_unsolved",
+    "future_predictions",
+    "conspiracy_theories",
+    "amazing_discoveries",
+    "space_mysteries",
+    "ocean_secrets",
+    "ancient_civilizations",
+    "unexplained_phenomena",
+    "breakthrough_technology"
+  ],
+  "video_settings": {
+    "duration": 15,
+    "resolution": "1080x1920",
+    "fps": 30,
+    "format": "mp4",
+    "codec": "h264",
+    "style": "cinematic_dramatic",
+    "aspect_ratio": "9:16"
+  },
+  "audio_settings": {
+    "background_music": true,
+    "sound_effects": true,
+    "voice_over": true,
+    "language": "ru",
+    "voice_type": "neural",
+    "music_volume": 0.3,
+    "voice_volume": 0.8
+  },
+  "content_formulas": {
+    "hook_duration": 3,
+    "development_duration": 7,
+    "climax_duration": 3,
+    "ending_duration": 2,
+    "text_overlay_timing": [1, 5, 10, 13],
+    "transition_effects": true
+  }
+}

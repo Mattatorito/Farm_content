@@ -1,0 +1,214 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "farm-content"
+version = "2025.1.0"
+description = "🔥 Вирусная Контент-Машина 2025 - Автоматическое создание и публикация вирусного контента"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "FarmContent Team", email = "info@farmcontent.ai"}
+]
+maintainers = [
+    {name = "FarmContent Team", email = "info@farmcontent.ai"}
+]
+keywords = [
+    "content", "ai", "video", "automation", "youtube", "tiktok", "viral",
+    "machine-learning", "content-creation", "social-media"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Content Creators",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = [
+    # Core web framework
+    "flask>=2.3.0",
+    "requests>=2.31.0",
+
+    # GUI libraries
+    "PyQt6>=6.5.0; sys_platform != 'darwin' or platform_machine != 'arm64'",
+
+    # Video and audio processing
+    "moviepy>=1.0.3",
+    "yt-dlp>=2023.7.6",
+    "opencv-python>=4.8.0",
+
+    # AI and machine learning
+    "openai>=1.0.0",
+    "whisper>=1.1.10",
+    "gtts>=2.3.2",
+
+    # Google APIs
+    "google-auth>=2.22.0",
+    "google-auth-oauthlib>=1.0.0",
+    "google-auth-httplib2>=0.1.0",
+    "google-api-python-client>=2.95.0",
+
+    # Image processing
+    "Pillow>=10.0.0",
+    "numpy>=1.24.3",
+
+    # Async and HTTP
+    "aiohttp>=3.8.5",
+    "asyncio-throttle>=1.0.2",
+
+    # Utilities
+    "python-magic>=0.4.24",
+    "pydantic>=2.0.0",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "loguru>=0.7.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+ai = [
+    "stability-sdk>=0.8.6",
+    "replicate>=0.15.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "myst-parser>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/farmcontent/farm-content"
+Documentation = "https://farm-content.readthedocs.io/"
+Repository = "https://github.com/farmcontent/farm-content.git"
+Issues = "https://github.com/farmcontent/farm-content/issues"
+
+[project.scripts]
+farm-content = "farm_content.cli:main"
+farm-content-web = "farm_content.interfaces.web:main"
+farm-content-gui = "farm_content.interfaces.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+farm_content = ["templates/*", "static/*", "assets/*"]
+
+# Black configuration
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    # directories
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort configuration
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+# mypy configuration
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "moviepy.*",
+    "yt_dlp.*",
+    "cv2.*",
+    "openai.*",
+    "whisper.*",
+    "gtts.*",
+    "stability_sdk.*",
+    "replicate.*",
+    "magic.*",
+]
+ignore_missing_imports = true
+
+# pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

@@ -1,0 +1,99 @@
+{
+  "production_settings": {
+    "videos_per_day": 5,
+    "upload_schedule": ["09:00", "14:00", "18:00", "21:00", "23:00"],
+    "quality_threshold": 0.8,
+    "auto_mode": true,
+    "batch_size": 3,
+    "retry_failed": true,
+    "max_retries": 2
+  },
+  "content_strategy": {
+    "trending_themes": [
+      "space_mysteries", "ocean_secrets", "brain_facts",
+      "future_tech", "historical_mysteries", "science_experiments",
+      "life_hacks", "motivational_stories", "conspiracy_theories",
+      "ancient_civilizations", "unexplained_phenomena", "medical_breakthroughs"
+    ],
+    "viral_formulas": {
+      "shock_factor": 0.8,
+      "curiosity_gap": 0.9,
+      "emotional_impact": 0.7,
+      "shareability": 0.8,
+      "retention_rate": 0.85
+    },
+    "content_mix": {
+      "educational": 0.4,
+      "entertainment": 0.3,
+      "mystery": 0.2,
+      "motivational": 0.1
+    },
+    "a_b_testing": {
+      "enabled": true,
+      "test_titles": true,
+      "test_thumbnails": true,
+      "test_descriptions": true,
+      "sample_size": 100
+    }
+  },
+  "ai_services": {
+    "primary": "runway_ml",
+    "fallback": ["pika_labs", "leonardo_ai", "placeholder"],
+    "quality_check": true,
+    "retry_attempts": 3,
+    "timeout": 300,
+    "use_cache": true
+  },
+  "optimization": {
+    "seo_keywords": [
+      "вирусное видео", "шокирующие факты", "невероятная правда",
+      "секреты", "тайны", "удивительное", "взрыв мозга",
+      "интересные факты", "познавательное", "образование",
+      "shorts", "тренды", "популярное", "топ контент"
+    ],
+    "thumbnail_optimization": {
+      "enabled": true,
+      "auto_generate": true,
+      "a_b_test": true,
+      "styles": ["dramatic", "colorful", "text_heavy", "face_reaction"]
+    },
+    "title_optimization": {
+      "enabled": true,
+      "max_variations": 3,
+      "include_trending": true,
+      "power_words": true,
+      "emoji_usage": 0.8
+    },
+    "description_templates": {
+      "enabled": true,
+      "auto_hashtags": true,
+      "include_timestamps": false,
+      "call_to_action": true
+    }
+  },
+  "monitoring": {
+    "track_performance": true,
+    "metrics": ["views", "likes", "comments", "shares", "retention"],
+    "reporting_interval": "daily",
+    "auto_adjust_strategy": true,
+    "performance_threshold": {
+      "min_views_24h": 1000,
+      "min_engagement_rate": 0.05,
+      "min_retention_rate": 0.3
+    }
+  },
+  "safety": {
+    "content_filtering": true,
+    "copyright_check": true,
+    "community_guidelines": true,
+    "auto_moderate": true,
+    "backup_content": true
+  },
+  "advanced_features": {
+    "trend_analysis": true,
+    "competitor_monitoring": true,
+    "optimal_timing": true,
+    "audience_targeting": true,
+    "cross_platform": false
+  }
+}

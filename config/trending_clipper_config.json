@@ -1,0 +1,85 @@
+{
+  "trending_sources": {
+    "gaming_channels": [
+      "@MrBeast",
+      "@PewDiePie",
+      "@Markiplier",
+      "@jacksepticeye",
+      "@DanTDM",
+      "@VanossGaming",
+      "@Ninja",
+      "@shroud"
+    ],
+    "entertainment_channels": [
+      "@MrBeast",
+      "@DudePerfect",
+      "@SteveHarvey",
+      "@TheEllenShow",
+      "@TeamCoco",
+      "@SethGodin",
+      "@Oprah",
+      "@JimmyKimmelLive"
+    ],
+    "comedy_channels": [
+      "@TheEllenShow",
+      "@SethGodin",
+      "@ConanOBrien",
+      "@SouthPark",
+      "@SaturdayNightLive",
+      "@KeyAndPeele",
+      "@CollegeHumor"
+    ],
+    "sports_channels": [
+      "@espn",
+      "@NFL",
+      "@NBA",
+      "@FCBarcelona",
+      "@realmadrid",
+      "@ManCity",
+      "@EASPORTSFIFA",
+      "@WWE"
+    ]
+  },
+  "trending_keywords": [
+    "viral",
+    "epic",
+    "best moments",
+    "highlights",
+    "funny",
+    "fails",
+    "wins",
+    "reaction",
+    "shocking",
+    "unbelievable",
+    "amazing",
+    "incredible",
+    "must watch",
+    "trending",
+    "popular"
+  ],
+  "video_filters": {
+    "min_views": 100000,
+    "max_age_days": 30,
+    "min_duration": 60,
+    "max_duration": 3600,
+    "languages": [
+      "en",
+      "ru"
+    ]
+  },
+  "clip_extraction": {
+    "clip_duration": 15,
+    "clips_per_video": 3,
+    "quality": "720p",
+    "format": "mp4",
+    "detect_highlights": true,
+    "avoid_intro_outro": true
+  },
+  "content_analysis": {
+    "use_whisper": true,
+    "detect_laughter": true,
+    "detect_excitement": true,
+    "detect_music_drops": true,
+    "emotional_peaks": true
+  }
+}

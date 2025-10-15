@@ -1,0 +1,142 @@
+{
+  "accounts": {
+    "ai_account": {
+      "name": "AI Viral Master",
+      "description": "Канал с AI-генерированным вирусным контентом",
+      "upload_schedule": ["10:00", "16:00", "22:00"],
+      "videos_per_day": 3,
+      "content_type": "ai_generated",
+      "themes": [
+        "mind_blowing_facts",
+        "what_if_scenarios",
+        "historical_secrets",
+        "science_experiments",
+        "future_predictions",
+        "space_mysteries",
+        "human_psychology",
+        "technology_explained"
+      ],
+      "target_audience": "educational_entertainment",
+      "credentials_file": "ai_account_secrets.json",
+      "channel_settings": {
+        "default_language": "ru",
+        "default_privacy": "public",
+        "category": "Education",
+        "tags_template": ["AI", "наука", "факты", "образование", "вирусное"]
+      }
+    },
+    "clipper_account": {
+      "name": "Epic Moments Hub",
+      "description": "Лучшие эпичные моменты из трендовых видео",
+      "upload_schedule": ["12:00", "18:00", "21:00"],
+      "clips_per_day": 5,
+      "content_type": "trending_clips",
+      "categories": [
+        "gaming",
+        "entertainment",
+        "comedy",
+        "sports",
+        "music",
+        "news",
+        "technology"
+      ],
+      "target_audience": "viral_entertainment",
+      "credentials_file": "clipper_account_secrets.json",
+      "channel_settings": {
+        "default_language": "ru",
+        "default_privacy": "public",
+        "category": "Entertainment",
+        "tags_template": ["эпик", "вирусное", "тренды", "хайлайты", "лучшие моменты"]
+      },
+      "extraction_settings": {
+        "min_clip_duration": 15,
+        "max_clip_duration": 60,
+        "clips_per_video": 3,
+        "quality_threshold": 0.7,
+        "trending_categories": ["gaming", "entertainment", "comedy", "sports"]
+      }
+    }
+  },
+  "content_strategy": {
+    "ai_account_ratio": 0.4,
+    "clipper_account_ratio": 0.6,
+    "cross_promotion": true,
+    "avoid_overlap": true,
+    "sync_schedules": false,
+    "distribution_strategy": {
+      "ai_peak_hours": ["10:00", "16:00", "22:00"],
+      "clipper_peak_hours": ["12:00", "18:00", "21:00"],
+      "weekday_focus": "ai_account",
+      "weekend_focus": "clipper_account"
+    }
+  },
+  "quality_control": {
+    "ai_content_threshold": 0.8,
+    "clip_content_threshold": 0.7,
+    "auto_moderate": true,
+    "backup_failed": true,
+    "content_filters": {
+      "min_video_length": 10,
+      "max_video_length": 300,
+      "required_audio": true,
+      "copyright_check": true
+    }
+  },
+  "upload_settings": {
+    "delay_between_uploads": 30,
+    "max_daily_uploads": 10,
+    "retry_failed_uploads": 3,
+    "upload_quality": "hd1080",
+    "thumbnail_generation": true,
+    "auto_seo_optimization": true
+  },
+  "monitoring": {
+    "track_analytics": true,
+    "performance_alerts": true,
+    "daily_reports": true,
+    "backup_content": true,
+    "log_all_activities": true
+  },
+  "ai_generation_presets": {
+    "viral_concepts": {
+      "educational": {
+        "themes": ["science", "history", "psychology", "technology"],
+        "duration_range": [30, 90],
+        "style": "engaging_narrator"
+      },
+      "entertainment": {
+        "themes": ["what_if", "mysteries", "predictions", "experiments"],
+        "duration_range": [15, 60],
+        "style": "dramatic_reveal"
+      }
+    },
+    "video_styles": {
+      "cinematic": {
+        "ai_service": "runway_ml",
+        "style_prompt": "cinematic, high quality, professional"
+      },
+      "anime": {
+        "ai_service": "pika_labs",
+        "style_prompt": "anime style, vibrant colors, dynamic"
+      },
+      "realistic": {
+        "ai_service": "leonardo_ai",
+        "style_prompt": "photorealistic, detailed, natural"
+      }
+    }
+  },
+  "trending_extraction_presets": {
+    "gaming_clips": {
+      "keywords": ["epic", "best", "funny", "fail", "win", "clutch"],
+      "min_views": 100000,
+      "max_age_days": 7,
+      "preferred_duration": [30, 120]
+    },
+    "entertainment_clips": {
+      "keywords": ["viral", "trending", "hilarious", "amazing", "shocking"],
+      "min_views": 50000,
+      "max_age_days": 3,
+      "preferred_duration": [15, 90]
+    }
+  }
+}

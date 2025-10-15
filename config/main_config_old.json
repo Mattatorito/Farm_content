@@ -1,0 +1,57 @@
+{
+  "debug": false,
+  "log_level": "INFO",
+  "base_dir": "/Users/alexandr/Desktop/VS_progect/Bots/Farm_content_full/Farm_content",
+  "database_path": "/Users/alexandr/Desktop/VS_progect/Bots/Farm_content_full/Farm_content/content_farm.db",
+  "modules": {
+    "content_source": {
+      "enabled": true,
+      "max_videos_per_run": 5,
+      "quality_threshold": 720
+    },
+    "video_downloader": {
+      "enabled": true,
+      "max_duration": 600,
+      "min_duration": 30,
+      "preferred_format": "mp4"
+    },
+    "auto_editor": {
+      "enabled": true,
+      "whisper_model": "base",
+      "min_clip_duration": 10,
+      "max_clip_duration": 60
+    },
+    "video_formatter": {
+      "enabled": true,
+      "output_resolution": [
+        1080,
+        1920
+      ],
+      "add_watermark": true,
+      "add_subtitles": true
+    },
+    "compliance_checker": {
+      "enabled": true,
+      "check_copyright": true,
+      "check_duration": true
+    },
+    "auto_publisher": {
+      "enabled": false,
+      "platforms": [
+        "youtube"
+      ],
+      "schedule_enabled": true
+    }
+  },
+  "security": {
+    "enable_rate_limiting": true,
+    "max_requests_per_hour": 100,
+    "enable_proxy": false
+  },
+  "web_interface": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 5000,
+    "debug": false
+  }
+}

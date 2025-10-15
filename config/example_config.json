@@ -1,0 +1,140 @@
+{
+  "app": {
+    "name": "Farm Content",
+    "version": "2025.1.0",
+    "debug": false
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5000
+  },
+  "api_keys": {
+    "openai": {
+      "api_key": "sk-proj-...",
+      "model": "gpt-4o-mini",
+      "description": "Получите API ключ на https://platform.openai.com/api-keys"
+    },
+    "youtube": {
+      "api_key": "AIzaSy...",
+      "client_secrets_file": "config/client_secrets.json",
+      "description": "Создайте проект в Google Cloud Console и включите YouTube Data API v3"
+    },
+    "stability": {
+      "api_key": "sk-...",
+      "description": "Получите API ключ на https://platform.stability.ai/"
+    },
+    "replicate": {
+      "api_token": "r8_...",
+      "description": "Получите токен на https://replicate.com/account"
+    }
+  },
+  "video_processing": {
+    "max_duration": 300,
+    "output_quality": "720p",
+    "max_file_size_mb": 100,
+    "default_clips_count": 3,
+    "default_clip_duration": 30,
+    "mobile_format": true,
+    "add_effects": false,
+    "normalize_audio": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": null,
+    "description": "Уровни: DEBUG, INFO, WARNING, ERROR, CRITICAL"
+  },
+  "database": {
+    "url": "sqlite:///farm_content.db",
+    "description": "Поддерживаются: SQLite, PostgreSQL, MySQL"
+  },
+  "directories": {
+    "data": "data",
+    "logs": "logs",
+    "config": "config",
+    "clips": "data/clips",
+    "ready_videos": "data/ready_videos",
+    "temp_trends": "data/temp_trends",
+    "generated_content": "data/generated_viral_content",
+    "viral_assets": "data/viral_assets"
+  },
+  "features": {
+    "url_processing": {
+      "enabled": true,
+      "description": "Обработка YouTube URL для создания клипов"
+    },
+    "trends_analysis": {
+      "enabled": true,
+      "description": "Анализ трендов и создание контента на основе популярных тем"
+    },
+    "ai_generation": {
+      "enabled": true,
+      "description": "Генерация контента с помощью AI"
+    },
+    "auto_upload": {
+      "enabled": false,
+      "description": "Автоматическая загрузка готовых видео на платформы"
+    }
+  },
+  "quality_presets": {
+    "low": "480p",
+    "medium": "720p",
+    "high": "1080p",
+    "ultra": "4k"
+  },
+  "content_types": {
+    "short": {
+      "max_duration": 60,
+      "aspect_ratio": "9:16",
+      "description": "Короткие видео для TikTok, YouTube Shorts, Instagram Reels"
+    },
+    "regular": {
+      "max_duration": 600,
+      "aspect_ratio": "16:9",
+      "description": "Обычные видео для YouTube, Telegram"
+    }
+  },
+  "usage_examples": {
+    "cli": {
+      "process_url": "farm-content process-url 'https://youtube.com/watch?v=...' --clips 3 --duration 30",
+      "web_interface": "farm-content web",
+      "gui_interface": "farm-content gui",
+      "info": "farm-content info",
+      "version": "farm-content version"
+    },
+    "environment_variables": {
+      "OPENAI_API_KEY": "sk-proj-...",
+      "YOUTUBE_API_KEY": "AIzaSy...",
+      "STABILITY_API_KEY": "sk-...",
+      "REPLICATE_API_TOKEN": "r8_...",
+      "DEBUG": "false",
+      "LOG_LEVEL": "INFO",
+      "HOST": "0.0.0.0",
+      "PORT": "5000"
+    }
+  },
+  "installation": {
+    "requirements": [
+      "Python 3.9+",
+      "FFmpeg",
+      "Git"
+    ],
+    "steps": [
+      "git clone <repository>",
+      "cd Farm_content",
+      "python -m venv venv",
+      "source venv/bin/activate  # или venv\\Scripts\\activate на Windows",
+      "pip install -e .",
+      "cp config/example_config.json config/my_config.json",
+      "# Отредактируйте config/my_config.json с вашими API ключами",
+      "farm-content --help"
+    ]
+  },
+  "troubleshooting": {
+    "common_issues": {
+      "api_keys_missing": "Убедитесь что все необходимые API ключи настроены в переменных окружения или config файле",
+      "ffmpeg_not_found": "Установите FFmpeg: brew install ffmpeg (macOS) или apt install ffmpeg (Ubuntu)",
+      "permission_denied": "Проверьте права доступа к директориям data/, logs/, config/",
+      "port_in_use": "Измените порт в настройках или остановите процесс использующий порт 5000"
+    }
+  }
+}

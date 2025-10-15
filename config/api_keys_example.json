@@ -1,0 +1,123 @@
+{
+  "_comment": "🎭 КОНФИГУРАЦИЯ API КЛЮЧЕЙ ДЛЯ ГИБРИДНОЙ СИСТЕМЫ",
+  "_instruction": "Замените все значения 'your-xxx-here' на реальные API ключи",
+
+  "openai": {
+    "api_key": "sk-proj-YOUR-OPENAI-API-KEY-HERE",
+    "organization": "org-your-org-id-here",
+    "model": "gpt-4",
+    "max_tokens": 2000,
+    "temperature": 0.7
+  },
+
+  "youtube": {
+    "_comment": "Google Cloud Console API credentials",
+    "client_id": "your-google-client-id.apps.googleusercontent.com",
+    "client_secret": "your-google-client-secret",
+    "redirect_uri": "http://localhost:8080/callback",
+    "scopes": [
+      "https://www.googleapis.com/auth/youtube.upload",
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+    ]
+  },
+
+  "ai_video_services": {
+    "runway_ml": {
+      "api_key": "your-runway-api-key-here",
+      "endpoint": "https://api.runwayml.com/v1",
+      "model": "gen2"
+    },
+    "pika_labs": {
+      "api_key": "your-pika-api-key-here",
+      "endpoint": "https://api.pika.art/v1",
+      "model": "pika-1.0"
+    },
+    "leonardo_ai": {
+      "api_key": "your-leonardo-api-key-here",
+      "endpoint": "https://cloud.leonardo.ai/api/rest/v1",
+      "model": "leonardo-creative"
+    },
+    "replicate": {
+      "api_token": "r8_your-replicate-token-here",
+      "model": "stability-ai/stable-video-diffusion"
+    }
+  },
+
+  "text_to_speech": {
+    "elevenlabs": {
+      "api_key": "your-elevenlabs-api-key-here",
+      "voice_id": "your-preferred-voice-id",
+      "model": "eleven_multilingual_v2"
+    },
+    "google_tts": {
+      "credentials_path": "path/to/google-tts-credentials.json",
+      "language_code": "ru-RU",
+      "voice_name": "ru-RU-Wavenet-D"
+    }
+  },
+
+  "trending_analysis": {
+    "youtube_data_api": {
+      "api_key": "your-youtube-data-api-key-here",
+      "quota_limit": 10000
+    },
+    "trending_api": {
+      "api_key": "your-trending-api-key-here",
+      "endpoint": "https://api.trending.com/v1"
+    }
+  },
+
+  "monitoring": {
+    "telegram_bot": {
+      "bot_token": "your-telegram-bot-token-here",
+      "chat_id": "your-telegram-chat-id"
+    },
+    "email_notifications": {
+      "smtp_server": "smtp.gmail.com",
+      "smtp_port": 587,
+      "email": "your-email@gmail.com",
+      "password": "your-app-password"
+    }
+  },
+
+  "security": {
+    "encryption_key": "your-32-char-encryption-key-here",
+    "jwt_secret": "your-jwt-secret-key-here",
+    "rate_limit": {
+      "requests_per_minute": 60,
+      "requests_per_hour": 1000
+    }
+  },
+
+  "proxy": {
+    "_comment": "Опционально: используйте proxy для избежания rate limits",
+    "enabled": false,
+    "http_proxy": "http://username:password@proxy-server:port",
+    "https_proxy": "https://username:password@proxy-server:port",
+    "rotating_proxies": [
+      "http://proxy1:port",
+      "http://proxy2:port"
+    ]
+  },
+
+  "development": {
+    "debug_mode": true,
+    "test_mode": false,
+    "mock_ai_responses": false,
+    "skip_youtube_upload": false,
+    "log_level": "INFO"
+  },
+
+  "_setup_instructions": {
+    "openai": "1. Зайти на https://platform.openai.com/api-keys\n2. Создать новый API ключ\n3. Скопировать в поле api_key",
+
+    "youtube": "1. Зайти в Google Cloud Console\n2. Создать новый проект\n3. Включить YouTube Data API v3\n4. Создать OAuth 2.0 credentials\n5. Скачать client_secret.json",
+
+    "runway_ml": "1. Зарегистрироваться на https://runwayml.com/\n2. Перейти в API Settings\n3. Создать новый API ключ",
+
+    "pika_labs": "1. Зарегистрироваться на https://pika.art/\n2. Получить доступ к API\n3. Создать API ключ в настройках",
+
+    "leonardo_ai": "1. Зарегистрироваться на https://leonardo.ai/\n2. Перейти в API section\n3. Создать новый API ключ"
+  }
+}
