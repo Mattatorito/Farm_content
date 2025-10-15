@@ -1,8 +1,11 @@
 """
-Утилиты для работы с видео.
+Утилиты для работы с видео - улучшенная версия с AI-анализом.
 """
 
 import asyncio
+import json
+import random
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -10,6 +13,12 @@ import numpy as np
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
 from farm_content.core import VideoProcessingError, VideoQuality, get_logger
+from .advanced_analyzer import AdvancedVideoAnalyzer
+from .viral_generator import ViralContentGenerator
+from .visual_effects import VisualEffectsEngine
+from .multiplatform import MultiPlatformOptimizer
+from .text_elements import TextElementsGenerator
+from .trend_analyzer import TrendAnalyzer
 
 logger = get_logger(__name__)
 
@@ -274,11 +283,19 @@ class VideoAnalyzer:
         return clips
 
 
-class ClipExtractor:
-    """Экстрактор клипов из видео."""
+class ViralClipExtractor:
+    """Улучшенный экстрактор клипов с AI-анализом и вирусной оптимизацией."""
 
     def __init__(self):
-        self.logger = get_logger(f"{__name__}.ClipExtractor")
+        self.logger = get_logger(f"{__name__}.ViralClipExtractor")
+        
+        # Инициализируем компоненты
+        self.analyzer = AdvancedVideoAnalyzer()
+        self.generator = ViralContentGenerator()
+        self.effects_engine = VisualEffectsEngine()
+        self.platform_optimizer = MultiPlatformOptimizer()
+        self.text_generator = TextElementsGenerator()
+        self.trend_analyzer = TrendAnalyzer()
 
         # Настройки качества
         self.quality_settings = {
@@ -287,6 +304,100 @@ class ClipExtractor:
             VideoQuality.HIGH: {"height": 1080, "bitrate": "5000k"},
             VideoQuality.ULTRA: {"height": 2160, "bitrate": "15000k"},
         }
+        
+        # Настройки для вирусного контента
+        self.viral_settings = {
+            "min_energy_threshold": 0.6,
+            "optimal_clip_duration": 30,
+            "max_clips_per_video": 5,
+            "auto_enhance": True,
+            "generate_metadata": True,
+            "multiplatform_export": True
+        }
+
+    async def create_viral_clips(
+        self,
+        video_path: Path,
+        target_platforms: List[str] = ["tiktok", "instagram_reels", "youtube_shorts"],
+        auto_detect_best_moments: bool = True,
+        apply_viral_effects: bool = True,
+        generate_metadata: bool = True,
+        output_dir: Optional[Path] = None,
+    ) -> Dict[str, Any]:
+        """Создание вирусных клипов с полной оптимизацией."""
+        
+        self.logger.info(f"🔥 Начинаем создание вирусного контента из {video_path}")
+        
+        try:
+            if output_dir is None:
+                output_dir = video_path.parent / "viral_content"
+                output_dir.mkdir(exist_ok=True)
+
+            # 1. Анализируем видео
+            self.logger.info("📊 Анализ видео...")
+            analysis = await self.analyzer.analyze_viral_potential(video_path)
+            
+            viral_score = analysis.get("viral_score", 0.5)
+            self.logger.info(f"🎯 Вирусный потенциал: {viral_score:.2f}")
+            
+            # 2. Создаем оптимизированный контент для платформ
+            self.logger.info("🚀 Создание мультиплатформенного контента...")
+            platform_content = await self.platform_optimizer.create_optimized_content(
+                video_path=video_path,
+                target_platforms=target_platforms,
+                content_strategy="viral_focused",
+                auto_detect_best_moments=auto_detect_best_moments,
+                generate_variations=True
+            )
+            
+            # 3. Генерируем метаданные если нужно
+            metadata_results = {}
+            if generate_metadata:
+                self.logger.info("📝 Генерация метаданных...")
+                for platform in target_platforms:
+                    metadata = self.generator.generate_viral_metadata(
+                        analysis, platform=platform
+                    )
+                    metadata_results[platform] = metadata
+            
+            # 4. Создаем расписание публикаций
+            self.logger.info("📅 Создание расписания публикаций...")
+            posting_schedule = await self.platform_optimizer.generate_posting_schedule(
+                platform_content, strategy="maximum_reach"
+            )
+            
+            # 5. Сохраняем результаты
+            results = {
+                "source_video": str(video_path),
+                "analysis": analysis,
+                "platform_content": platform_content,
+                "metadata": metadata_results,
+                "posting_schedule": posting_schedule,
+                "summary": {
+                    "total_clips_created": sum(
+                        len(data.get("main_versions", [])) for data in platform_content.values()
+                    ),
+                    "total_variations": sum(
+                        len(data.get("variations", [])) for data in platform_content.values()
+                    ),
+                    "platforms_optimized": len(target_platforms),
+                    "viral_score": viral_score,
+                    "processing_time": "calculated_later"
+                }
+            }
+            
+            # Сохраняем метаданные в JSON
+            import json
+            metadata_file = output_dir / f"{video_path.stem}_viral_content.json"
+            with open(metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(results, f, ensure_ascii=False, indent=2)
+            
+            self.logger.info(f"✅ Вирусный контент создан! Метаданные: {metadata_file}")
+            return results
+
+        except Exception as e:
+            logger.error(f"❌ Ошибка создания вирусного контента: {e}")
+            raise VideoProcessingError(f"Не удалось создать вирусный контент: {e}")
 
     async def extract_clip(
         self,
@@ -297,8 +408,10 @@ class ClipExtractor:
         mobile_format: bool = True,
         normalize_audio: bool = True,
         output_dir: Optional[Path] = None,
+        apply_effects: bool = False,
+        target_platform: str = "tiktok",
     ) -> Path:
-        """Извлечение клипа из видео."""
+        """Извлечение клипа из видео с опциональными эффектами."""
         try:
             if output_dir is None:
                 output_dir = video_path.parent / "clips"
@@ -306,13 +419,26 @@ class ClipExtractor:
 
             # Генерируем имя выходного файла
             timestamp = f"{int(start_time)}-{int(end_time)}"
-            output_file = output_dir / f"{video_path.stem}_clip_{timestamp}.mp4"
+            platform_suffix = f"_{target_platform}" if apply_effects else ""
+            output_file = output_dir / f"{video_path.stem}_clip_{timestamp}{platform_suffix}.mp4"
 
             with VideoFileClip(str(video_path)) as video:
                 # Обрезаем по времени
                 clip = video.subclip(start_time, end_time)
 
-                # Применяем обработку
+                # Применяем эффекты если нужно
+                if apply_effects:
+                    self.logger.info(f"🎨 Применение эффектов для {target_platform}...")
+                    enhanced_clip = await self.effects_engine.apply_viral_effects(
+                        video_path,
+                        style="tiktok_viral",
+                        intensity=0.8,
+                        auto_optimize=True,
+                        target_platform=target_platform
+                    )
+                    clip = enhanced_clip.subclip(start_time, end_time)
+
+                # Применяем базовую обработку
                 if mobile_format:
                     clip = self._apply_mobile_format(clip)
 
@@ -335,12 +461,94 @@ class ClipExtractor:
                     ),
                 )
 
-            logger.info(f"Клип сохранен: {output_file}")
+            logger.info(f"✅ Клип сохранен: {output_file}")
             return output_file
 
         except Exception as e:
-            logger.error(f"Ошибка извлечения клипа: {e}")
+            logger.error(f"❌ Ошибка извлечения клипа: {e}")
             raise VideoProcessingError(f"Не удалось извлечь клип: {e}")
+
+    async def analyze_and_extract_best_clips(
+        self,
+        video_path: Path,
+        clips_count: int = 3,
+        target_duration: int = 30,
+        min_viral_score: float = 0.6,
+        output_dir: Optional[Path] = None,
+    ) -> List[Dict[str, Any]]:
+        """Анализ видео и извлечение лучших клипов на основе AI."""
+        
+        self.logger.info(f"🎯 Поиск {clips_count} лучших клипов длительностью {target_duration}с")
+        
+        try:
+            # Анализируем видео
+            analysis = await self.analyzer.analyze_viral_potential(video_path)
+            
+            # Находим оптимальные клипы
+            optimal_clips = await self.analyzer.find_optimal_clips(
+                video_path,
+                target_duration=target_duration,
+                clips_count=clips_count * 2,  # Больше кандидатов для выбора
+                content_type="auto"
+            )
+            
+            # Фильтруем по вирусному потенциалу
+            filtered_clips = [
+                clip for clip in optimal_clips
+                if clip[2].get("viral_potential", 0) >= min_viral_score
+            ]
+            
+            # Берем топ клипов
+            best_clips = sorted(
+                filtered_clips,
+                key=lambda x: x[2].get("viral_potential", 0),
+                reverse=True
+            )[:clips_count]
+            
+            # Если недостаточно хороших клипов, берем лучшие доступные
+            if len(best_clips) < clips_count:
+                remaining = clips_count - len(best_clips)
+                additional_clips = sorted(
+                    optimal_clips,
+                    key=lambda x: x[2].get("energy", 0),
+                    reverse=True
+                )[:remaining]
+                best_clips.extend(additional_clips)
+            
+            # Извлекаем клипы
+            results = []
+            for i, (start, end, clip_info) in enumerate(best_clips):
+                self.logger.info(f"🎬 Создание клипа {i+1}/{len(best_clips)}: {start:.1f}s - {end:.1f}s")
+                
+                clip_path = await self.extract_clip(
+                    video_path=video_path,
+                    start_time=start,
+                    end_time=end,
+                    output_dir=output_dir,
+                    apply_effects=True,
+                    target_platform="tiktok"
+                )
+                
+                clip_result = {
+                    "clip_index": i + 1,
+                    "file_path": str(clip_path),
+                    "start_time": start,
+                    "end_time": end,
+                    "duration": end - start,
+                    "viral_potential": clip_info.get("viral_potential", 0),
+                    "energy_level": clip_info.get("energy", 0),
+                    "motion_level": clip_info.get("motion", 0),
+                    "audio_level": clip_info.get("audio", 0),
+                }
+                
+                results.append(clip_result)
+            
+            self.logger.info(f"✅ Создано {len(results)} клипов с высоким вирусным потенциалом")
+            return results
+            
+        except Exception as e:
+            logger.error(f"❌ Ошибка анализа и извлечения клипов: {e}")
+            raise VideoProcessingError(f"Не удалось проанализировать и извлечь клипы: {e}")
 
     def _apply_mobile_format(self, clip: VideoFileClip) -> VideoFileClip:
         """Применение мобильного формата (9:16)."""
@@ -369,6 +577,265 @@ class ClipExtractor:
         except Exception as e:
             logger.warning(f"Ошибка применения мобильного формата: {e}")
             return clip
+
+    async def create_perfect_viral_content(
+        self,
+        video_path: Path,
+        target_platforms: List[str] = ["tiktok", "instagram_reels", "youtube_shorts"],
+        use_trend_analysis: bool = True,
+        add_text_overlays: bool = True,
+        intensity: float = 0.9,
+        output_dir: Optional[Path] = None,
+    ) -> Dict[str, Any]:
+        """
+        Создание идеального вирусного контента с использованием всех AI-возможностей.
+        
+        Этот метод объединяет все компоненты системы:
+        - Анализ актуальных трендов
+        - AI-анализ видео 
+        - Адаптация под тренды
+        - Вирусные эффекты
+        - Текстовые элементы 
+        - Мультиплатформенная оптимизация
+        - Генерация метаданных
+        """
+        
+        self.logger.info("🚀 Создаем ИДЕАЛЬНЫЙ вирусный контент!")
+        self.logger.info(f"📱 Целевые платформы: {', '.join(target_platforms)}")
+        self.logger.info(f"🎯 Интенсивность: {intensity:.1f}")
+        
+        start_time = asyncio.get_event_loop().time()
+        
+        try:
+            if output_dir is None:
+                output_dir = video_path.parent / "perfect_viral_content" 
+            output_dir.mkdir(exist_ok=True)
+            
+            # =================== ШАГ 1: АНАЛИЗ ТРЕНДОВ ===================
+            trends_analysis = {}
+            if use_trend_analysis:
+                self.logger.info("🔍 Шаг 1/6: Анализ актуальных трендов...")
+                trends_analysis = await self.trend_analyzer.analyze_current_trends(target_platforms)
+                
+                # Сохраняем отчет по трендам
+                trends_report_path = output_dir / f"trends_report_{video_path.stem}.json"
+                self.trend_analyzer.export_trends_report(trends_analysis, trends_report_path)
+            
+            # =================== ШАГ 2: AI-АНАЛИЗ ВИДЕО ===================
+            self.logger.info("🧠 Шаг 2/6: Глубокий AI-анализ видео...")
+            video_analysis = await self.analyzer.analyze_viral_potential(video_path)
+            viral_score = video_analysis.get("viral_score", 0.5)
+            
+            self.logger.info(f"📊 Базовый вирусный потенциал: {viral_score:.2f}")
+            
+            # =================== ШАГ 3: АДАПТАЦИЯ ПОД ТРЕНДЫ ===================
+            adaptation_plans = {}
+            if use_trend_analysis and trends_analysis:
+                self.logger.info("🎯 Шаг 3/6: Адаптация контента под тренды...")
+                
+                for platform in target_platforms:
+                    adaptation_plan = await self.trend_analyzer.adapt_content_to_trends(
+                        video_analysis, trends_analysis, platform
+                    )
+                    adaptation_plans[platform] = adaptation_plan
+                    
+                    improvement = adaptation_plan.get("estimated_improvement", 0)
+                    self.logger.info(f"📈 {platform}: ожидаемое улучшение +{improvement:.1%}")
+            
+            # =================== ШАГ 4: СОЗДАНИЕ ОПТИМИЗИРОВАННОГО КОНТЕНТА ===================
+            self.logger.info("🎬 Шаг 4/6: Создание мультиплатформенного контента...")
+            
+            platform_content = await self.platform_optimizer.create_optimized_content(
+                video_path=video_path,
+                target_platforms=target_platforms,
+                content_strategy="maximum_viral",
+                auto_detect_best_moments=True,
+                generate_variations=True,
+                viral_intensity=intensity
+            )
+            
+            # =================== ШАГ 5: ДОБАВЛЕНИЕ ТЕКСТОВЫХ ЭЛЕМЕНТОВ ===================
+            enhanced_content = {}
+            if add_text_overlays:
+                self.logger.info("📝 Шаг 5/6: Добавление вирусных текстовых элементов...")
+                
+                for platform, content_data in platform_content.items():
+                    enhanced_content[platform] = content_data.copy()
+                    
+                    # Добавляем тексты к основным версиям
+                    if "main_versions" in content_data:
+                        for i, video_file in enumerate(content_data["main_versions"]):
+                            if Path(video_file).exists():
+                                enhanced_video = await self.text_generator.add_viral_text_overlays(
+                                    Path(video_file),
+                                    platform=platform,
+                                    auto_generate_text=True,
+                                    viral_intensity=intensity
+                                )
+                                
+                                # Сохраняем улучшенную версию
+                                enhanced_path = output_dir / f"{platform}_with_text_{i}.mp4"
+                                await asyncio.get_event_loop().run_in_executor(
+                                    None,
+                                    lambda: enhanced_video.write_videofile(
+                                        str(enhanced_path), 
+                                        codec="libx264", 
+                                        audio_codec="aac",
+                                        verbose=False,
+                                        logger=None
+                                    )
+                                )
+                                
+                                enhanced_content[platform].setdefault("enhanced_versions", []).append(str(enhanced_path))
+                                enhanced_video.close()
+            else:
+                enhanced_content = platform_content
+            
+            # =================== ШАГ 6: ФИНАЛЬНАЯ ГЕНЕРАЦИЯ МЕТАДАННЫХ ===================
+            self.logger.info("📋 Шаг 6/6: Генерация финальных метаданных...")
+            
+            final_metadata = {}
+            for platform in target_platforms:
+                
+                # Используем адаптированный анализ если есть
+                analysis_for_metadata = video_analysis
+                if platform in adaptation_plans:
+                    # Объединяем исходный анализ с адаптациями
+                    adaptation = adaptation_plans[platform]
+                    analysis_for_metadata = {
+                        **video_analysis,
+                        "adapted_for_trends": True,
+                        "trend_adaptations": adaptation,
+                        "estimated_viral_boost": adaptation.get("estimated_improvement", 0)
+                    }
+                
+                metadata = self.generator.generate_viral_metadata(
+                    analysis_for_metadata,
+                    platform=platform,
+                    intensity=intensity
+                )
+                
+                # Добавляем трендовые элементы в метаданные
+                if platform in adaptation_plans:
+                    content_mods = adaptation_plans[platform].get("content_modifications", {})
+                    
+                    # Обновляем хештеги трендовыми
+                    if content_mods.get("hashtag_suggestions"):
+                        trending_hashtags = content_mods["hashtag_suggestions"]
+                        existing_hashtags = metadata.get("hashtags", [])
+                        # Смешиваем трендовые и AI-сгенерированные хештеги
+                        metadata["hashtags"] = trending_hashtags[:3] + existing_hashtags[:7]
+                    
+                    # Добавляем трендовый call-to-action
+                    if content_mods.get("call_to_action"):
+                        metadata["call_to_action"] = content_mods["call_to_action"]
+                
+                final_metadata[platform] = metadata
+            
+            # =================== СОЗДАНИЕ ФИНАЛЬНОГО ОТЧЕТА ===================
+            processing_time = asyncio.get_event_loop().time() - start_time
+            
+            final_results = {
+                "source_video": str(video_path),
+                "created_at": str(datetime.now()),
+                "processing_time_seconds": round(processing_time, 2),
+                
+                # Анализ
+                "original_analysis": video_analysis,
+                "trends_analysis": trends_analysis,
+                "trend_adaptations": adaptation_plans,
+                
+                # Контент
+                "platform_content": enhanced_content,
+                "final_metadata": final_metadata,
+                
+                # Метрики
+                "performance_metrics": {
+                    "original_viral_score": viral_score,
+                    "estimated_improvements": {
+                        platform: adaptation_plans.get(platform, {}).get("estimated_improvement", 0)
+                        for platform in target_platforms
+                    },
+                    "total_content_pieces": sum(
+                        len(data.get("enhanced_versions", data.get("main_versions", [])))
+                        for data in enhanced_content.values()
+                    ),
+                    "platforms_optimized": len(target_platforms),
+                    "ai_systems_used": [
+                        "AdvancedVideoAnalyzer",
+                        "TrendAnalyzer", 
+                        "ViralContentGenerator",
+                        "VisualEffectsEngine",
+                        "MultiPlatformOptimizer",
+                        "TextElementsGenerator"
+                    ]
+                },
+                
+                # Рекомендации по публикации
+                "publishing_strategy": await self._create_publishing_strategy(
+                    enhanced_content, final_metadata, trends_analysis
+                )
+            }
+            
+            # Сохраняем итоговый отчет
+            final_report_path = output_dir / f"PERFECT_VIRAL_CONTENT_{video_path.stem}.json"
+            with open(final_report_path, 'w', encoding='utf-8') as f:
+                json.dump(final_results, f, ensure_ascii=False, indent=2)
+            
+            self.logger.info("=" * 60)
+            self.logger.info("🎉 ИДЕАЛЬНЫЙ ВИРУСНЫЙ КОНТЕНТ СОЗДАН!")
+            self.logger.info(f"⏱️  Время обработки: {processing_time:.1f} сек")
+            self.logger.info(f"🎬 Создано видео: {final_results['performance_metrics']['total_content_pieces']}")
+            self.logger.info(f"📱 Платформы: {len(target_platforms)}")
+            self.logger.info(f"📈 Средний прирост: {sum(final_results['performance_metrics']['estimated_improvements'].values()) / len(target_platforms):.1%}")
+            self.logger.info(f"📂 Результаты: {final_report_path}")
+            self.logger.info("=" * 60)
+            
+            return final_results
+            
+        except Exception as e:
+            logger.error(f"❌ КРИТИЧЕСКАЯ ОШИБКА создания идеального контента: {e}")
+            raise VideoProcessingError(f"Не удалось создать идеальный вирусный контент: {e}")
+
+    async def _create_publishing_strategy(
+        self,
+        content: Dict[str, Any],
+        metadata: Dict[str, Any],
+        trends: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Создание стратегии публикации."""
+        
+        from datetime import datetime, timedelta
+        
+        strategy = {
+            "optimal_posting_times": {
+                "tiktok": ["18:00", "20:00", "22:00"],
+                "instagram_reels": ["19:00", "21:00"], 
+                "youtube_shorts": ["20:00", "22:00"]
+            },
+            "publishing_sequence": [],
+            "cross_promotion_plan": {},
+            "performance_tracking": {}
+        }
+        
+        # Создаем последовательность публикации
+        base_time = datetime.now()
+        
+        for i, (platform, content_data) in enumerate(content.items()):
+            versions = content_data.get("enhanced_versions", content_data.get("main_versions", []))
+            
+            for j, version_path in enumerate(versions):
+                publish_time = base_time + timedelta(hours=i*2, minutes=j*30)
+                
+                strategy["publishing_sequence"].append({
+                    "platform": platform,
+                    "content_file": version_path,
+                    "scheduled_time": publish_time.isoformat(),
+                    "metadata": metadata.get(platform, {}),
+                    "expected_performance": "high" if platform in ["tiktok", "instagram_reels"] else "medium"
+                })
+        
+        return strategy
 
     def _apply_quality_settings(
         self, clip: VideoFileClip, quality: VideoQuality

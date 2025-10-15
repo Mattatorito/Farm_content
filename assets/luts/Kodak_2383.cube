@@ -1,0 +1,8 @@
+# Placeholder LUT file for Kodak 2383
+# This is a stub .cube file; replace with a real LUT for production.
+TITLE "Kodak_2383"
+LUT_1D_SIZE 2
+DOMAIN_MIN 0.0 0.0 0.0
+DOMAIN_MAX 1.0 1.0 1.0
+0.0 0.0 0.0
+1.0 1.0 1.0

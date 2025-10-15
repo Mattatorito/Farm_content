@@ -1,0 +1,7 @@
+# Placeholder LUT file for Black-and-White Film
+TITLE "BW_Film"
+LUT_1D_SIZE 2
+DOMAIN_MIN 0.0 0.0 0.0
+DOMAIN_MAX 1.0 1.0 1.0
+0.0 0.0 0.0
+0.9 0.9 0.9

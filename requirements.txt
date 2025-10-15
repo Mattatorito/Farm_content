@@ -1,18 +1,22 @@
-# Вирусная Контент-Машина 2025 - Зависимости
+# Вирусная Контент-Машина 2025 — зависимые пакеты (pip)
 
-# Основные веб-фреймворки
+# Обработка видео/аудио и пайплайн
+moviepy>=1.0.3
+opencv-python>=4.8.0
+scenedetect>=0.6.7
+faster-whisper>=1.0.0
+ffmpeg-python>=0.2.0
+numpy>=1.24.0
+pysrt>=1.1.2
+pydub>=0.25.1
+tqdm>=4.65.0
+
+# Веб/GUI (опционально для вашего UI)
 flask>=2.3.0
 requests>=2.31.0
-
-# GUI библиотеки
 PyQt6>=6.5.0
 
-# Обработка видео и аудио
-moviepy>=1.0.3
-yt-dlp>=2023.7.6
-opencv-python>=4.8.0
-
-# AI и машинное обучение
+# AI/ML и TTS (если нужно в других частях проекта)
 openai>=1.0.0
 whisper>=1.1.10
 gtts>=2.3.2
@@ -25,69 +29,37 @@ google-api-python-client>=2.95.0
 
 # Обработка изображений
 Pillow>=10.0.0
-numpy>=1.24.3
 
 # Async и HTTP
 aiohttp>=3.8.5
-asyncio
 
-# Утилиты и системные библиотеки
-pathlib
-logging
-json
-tempfile
-random
-datetime
-base64
-pickle
-
-# Дополнительные AI сервисы (опционально)
-stability-sdk  # Stability AI
-replicate      # Replicate API
-
-# Для работы с файлами и системой
+# Работа с файлами/системой
 python-magic
 psutil
 
-# Для обработки субтитров
-pysrt
+# Субтитры/аудио дополнительно
 webvtt-py
-
-# Дополнительные аудио библиотеки
-pydub
 librosa
 
-# Для веб-скрейпинга (анализ трендов)
+# Веб-скрейпинг
 beautifulsoup4>=4.12.0
 selenium>=4.11.0
 
-# Утилиты для работы с JSON и конфигурацией
+# JSON/конфиги
 jsonschema
 pyyaml
 
-# Прогресс бары и логирование
-tqdm>=4.65.0
+# Логи/утилиты
 colorama>=0.4.6
 
-# Для работы с базами данных (если нужно)
-sqlite3
-
-# Системные утилиты
-platform
-subprocess
-threading
-multiprocessing
-
-# Для работы с датами и временем
+# Даты/время
 pytz
-dateutil
+python-dateutil>=2.8.2
 
-# Криптография для безопасности API ключей
+# Криптография/валидация
 cryptography>=41.0.0
-
-# Валидация данных
 pydantic>=2.0.0
 
-# Для мониторинга производительности
+# Мониторинг (опционально)
 memory-profiler
 py-spy

@@ -1,4 +1,52 @@
 {
-  "youtube_accounts": [],
-  "note": "Добавьте сюда данные аккаунтов YouTube для автопубликации"
+  "youtube_accounts": [
+    {
+      "name": "acc1_ai",
+      "platform": "youtube",
+      "timezone": "Europe/Moscow",
+      "pipeline": "ai_video",
+      "topics": ["залипательные", "мотивация", "виральные"],
+      "youtube": {
+        "client_secrets": "config/client_secrets.json",
+        "token_file": "config/tokens/acc1_ai_token.json"
+      }
+    },
+    {
+      "name": "acc2_trends",
+      "platform": "youtube",
+      "timezone": "Europe/Moscow",
+      "pipeline": "trend_shorts",
+      "topics": ["ютуб тренды", "инстаграм тренды"],
+      "youtube": {
+        "client_secrets": "config/client_secrets.json",
+        "token_file": "config/tokens/acc2_trends_token.json"
+      }
+    },
+    {
+      "name": "acc3_trends",
+      "platform": "youtube",
+      "timezone": "Europe/Moscow",
+      "pipeline": "trend_shorts",
+      "topics": ["шортсы", "реелс", "тренды"],
+      "youtube": {
+        "client_secrets": "config/client_secrets.json",
+        "token_file": "config/tokens/acc3_trends_token.json"
+      }
+    },
+    {
+      "name": "acc4_movies",
+      "platform": "youtube",
+      "timezone": "Europe/Moscow",
+      "pipeline": "movie_cuts",
+      "movie_clip": {
+        "source": "viral_assets/movie_clips/input.mp4",
+        "srt": "viral_assets/subtitles/input.srt"
+      },
+      "youtube": {
+        "client_secrets": "config/client_secrets.json",
+        "token_file": "config/tokens/acc4_movies_token.json"
+      }
+    }
+  ],
+  "note": "Пример на 4 аккаунта. Запускайте dry-run: python auto_publisher.py --dry-run или по аккаунтам: --only acc1_ai acc4_movies"
 }
