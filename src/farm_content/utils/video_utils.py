@@ -6,7 +6,6 @@ import asyncio
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import cv2
 import numpy as np
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
@@ -134,7 +133,6 @@ class VideoAnalyzer:
             audio_array = video.audio.to_soundarray()
 
             # Вычисляем RMS энергию для каждой секунды
-            fps = video.fps
             chunk_size = int(video.audio.fps)  # 1 секунда
 
             energy_levels = []

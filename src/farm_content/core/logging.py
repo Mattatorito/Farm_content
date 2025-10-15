@@ -1,13 +1,12 @@
 """
-Система логирования приложения.
+Логирование для Farm Content.
 """
 
 import logging
 import sys
-from pathlib import Path
 from typing import Optional
 
-from loguru import logger as loguru_logger
+from loguru import logger
 
 from .config import get_settings
 
@@ -18,7 +17,7 @@ class InterceptHandler(logging.Handler):
     def emit(self, record):
         # Get corresponding Loguru level if it exists
         try:
-            level = loguru_logger.level(record.levelname).name
+            level = logger.level(record.levelname).name
         except ValueError:
             level = record.levelno
 
@@ -28,7 +27,7 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        loguru_logger.opt(depth=depth, exception=record.exc_info).log(
+        logger.opt(depth=depth, exception=record.exc_info).log(
             level, record.getMessage()
         )
 
@@ -38,7 +37,7 @@ def setup_logging() -> None:
     settings = get_settings()
 
     # Удаляем стандартный обработчик loguru
-    loguru_logger.remove()
+    logger.remove()
 
     # Настраиваем форматы
     console_format = (
@@ -56,7 +55,7 @@ def setup_logging() -> None:
     )
 
     # Консольный вывод
-    loguru_logger.add(
+    logger.add(
         sys.stdout,
         format=console_format,
         level=settings.log_level,
@@ -67,7 +66,7 @@ def setup_logging() -> None:
 
     # Файловый вывод
     log_file = settings.log_file or str(settings.logs_dir / "farm_content.log")
-    loguru_logger.add(
+    logger.add(
         log_file,
         format=file_format,
         level="DEBUG",
@@ -79,7 +78,7 @@ def setup_logging() -> None:
     )
 
     # Отдельные файлы для разных уровней
-    loguru_logger.add(
+    logger.add(
         settings.logs_dir / "error.log",
         format=file_format,
         level="ERROR",
@@ -105,9 +104,5 @@ def get_logger(name: Optional[str] = None):
         get_logger._setup_done = True
 
     if name:
-        return loguru_logger.bind(name=name)
-    return loguru_logger
-
-
-# Основной логгер приложения
-logger = get_logger("farm_content")
+        return logger.bind(name=name)
+    return logger

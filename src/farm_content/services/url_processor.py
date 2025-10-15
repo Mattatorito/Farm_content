@@ -9,7 +9,6 @@ from typing import Any, Callable, Dict, List, Optional
 from urllib.parse import parse_qs, urlparse
 
 import yt_dlp
-from moviepy.video.io.VideoFileClip import VideoFileClip
 
 from farm_content.core import (
     DownloadError,
@@ -176,7 +175,7 @@ class URLProcessorService:
             if progress_callback:
                 progress_callback(30, "Анализ видео...")
 
-            analysis = await self.video_analyzer.analyze_video(video_path)
+            await self.video_analyzer.analyze_video(video_path)
 
             # Определяем временные отметки для клипов
             if progress_callback:

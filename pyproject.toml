@@ -39,8 +39,8 @@ dependencies = [
     "flask>=2.3.0",
     "requests>=2.31.0",
 
-    # GUI libraries
-    "PyQt6>=6.5.0; sys_platform != 'darwin' or platform_machine != 'arm64'",
+    # GUI libraries  
+    "PyQt6>=6.5.0",
 
     # Video and audio processing
     "moviepy>=1.0.3",
@@ -97,10 +97,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/farmcontent/farm-content"
-Documentation = "https://farm-content.readthedocs.io/"
-Repository = "https://github.com/farmcontent/farm-content.git"
-Issues = "https://github.com/farmcontent/farm-content/issues"
+Homepage = "https://github.com/Mattatorito/Farm_content"
+Documentation = "https://github.com/Mattatorito/Farm_content#readme"
+Repository = "https://github.com/Mattatorito/Farm_content.git"
+Issues = "https://github.com/Mattatorito/Farm_content/issues"
 
 [project.scripts]
 farm-content = "farm_content.cli:main"
@@ -171,6 +171,21 @@ module = [
     "magic.*",
 ]
 ignore_missing_imports = true
+
+# flake8 configuration
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__", 
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    ".mypy_cache",
+    ".pytest_cache",
+]
 
 # pytest configuration
 [tool.pytest.ini_options]

@@ -1,8 +1,7 @@
 """
-Система конфигурации приложения.
+Конфигурация приложения Farm Content.
 """
 
-import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 

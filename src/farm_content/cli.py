@@ -15,7 +15,6 @@ from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
 from farm_content.core import (
-    ProcessingMode,
     URLProcessingTask,
     get_logger,
     get_settings,

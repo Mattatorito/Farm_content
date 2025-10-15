@@ -1,11 +1,10 @@
 """
-Веб-интерфейс для Farm Content.
+Web интерфейс Farm Content.
 """
 
-import os
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, jsonify, render_template, request
 
 from farm_content.core.config import get_settings
 from farm_content.core.logging import get_logger
@@ -79,12 +78,22 @@ def create_templates():
     <title>{{ app_name }}</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .container {
+            max-width: 800px; margin: 0 auto; background: white;
+            padding: 20px; border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         h1 { color: #e74c3c; text-align: center; }
         .form-group { margin: 20px 0; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="number"] { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        button { background: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        input[type="text"], input[type="number"] {
+            width: 100%; padding: 8px; border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #e74c3c; color: white; padding: 10px 20px;
+            border: none; border-radius: 4px; cursor: pointer;
+        }
         button:hover { background: #c0392b; }
         .status { margin: 20px 0; padding: 10px; border-radius: 4px; }
         .success { background: #d4edda; color: #155724; }
@@ -133,18 +142,25 @@ def create_templates():
                 const response = await fetch('/api/process-url', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url, clips, duration })
+                    body: JSON.stringify({
+                        url: url,
+                        clips: clips,
+                        duration: duration
+                    })
                 });
 
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    status.innerHTML = `<div class="status success">✅ ${data.message}</div>`;
+                    status.innerHTML =
+                        `<div class="status success">✅ ${data.message}</div>`;
                 } else {
-                    status.innerHTML = `<div class="status error">❌ ${data.error}</div>`;
+                    status.innerHTML =
+                        `<div class="status error">❌ ${data.error}</div>`;
                 }
             } catch (error) {
-                status.innerHTML = `<div class="status error">❌ Ошибка: ${error.message}</div>`;
+                status.innerHTML =
+                    `<div class="status error">❌ Ошибка: ${error.message}</div>`;
             }
         }
     </script>
